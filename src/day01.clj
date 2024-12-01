@@ -20,4 +20,17 @@
                 0 0)))
        (reduce +)))
 
-(println (solve1 (read-input "../input/day01.txt")))
+(defn count_occ [x vect] (count (filter #(= x %) vect)))
+(defn similarity_score [[l r]] (map #(* % (count_occ % r)) l))
+
+(defn solve2
+  [input]
+  (->> input
+       (map (fn [x] (map parse-long (str/split x #"\s+")))) ;read vect from
+                                                            ;str
+       (transpose)
+       (similarity_score)
+       (reduce +)))
+
+;(println (solve1 (read-input "../input/day01.txt")))
+(println (solve2 (read-input "../input/day01.txt")))
