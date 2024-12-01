@@ -5,31 +5,30 @@
 
 (defn transpose [x] (apply mapv vector x))
 
-(defn solve1
+(defn silver
   [input]
   (->> input
-       (map (fn [x] (map parse-long (str/split x #"\s+")))) ;read vect from
-                                                            ;str
+       ;; re-seq creates a sequence from regex matches
+       (map (fn [x] (map parse-long (re-seq #"\d+" x))))
        (transpose)
-       (map sort) ;order
-       (transpose) ; now we tuple of smallests
-       (map (fn [[frst scnd]]
-              (case (compare frst scnd)
-                1 (- frst scnd)
-                -1 (- scnd frst)
+       (map sort)
+       (transpose)
+       (map (fn [[x y]]
+              (case (compare x y)
+                1 (- x y)
+                -1 (- y x)
                 0 0)))
        (reduce +)))
 
 (defn similarity_score [[l r]] (map #(* % (get (frequencies r) % 0)) l))
 
-(defn solve2
+(defn gold
   [input]
   (->> input
-       (map (fn [x] (map parse-long (str/split x #"\s+")))) ;read vect from
-                                                            ;str
+       (map (fn [x] (map parse-long (re-seq #"\d+" x))))
        (transpose)
        (similarity_score)
        (reduce +)))
 
-;(println (solve1 (read-input "../input/day01.txt")))
-(println (solve2 (read-input "../input/day01.txt")))
+(println (silver (read-input "../input/day01.txt")))
+(println (gold (read-input "../input/day01.txt")))
