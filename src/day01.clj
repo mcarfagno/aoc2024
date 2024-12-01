@@ -20,8 +20,7 @@
                 0 0)))
        (reduce +)))
 
-(defn count_occ [x vect] (count (filter #(= x %) vect)))
-(defn similarity_score [[l r]] (map #(* % (count_occ % r)) l))
+(defn similarity_score [[l r]] (map #(* % (get (frequencies r) % 0)) l))
 
 (defn solve2
   [input]
