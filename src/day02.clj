@@ -10,7 +10,10 @@
     -1 (if (<= 1 (abs (- x y)) 3) -1 0)
     0 0))
 
-(defn safety [x] (let [levels (map level (partition 2 1 x))] (apply = levels)))  ;TODO: check nonzero as well
+(defn safety
+  [x]
+  (let [levels (map level (partition 2 1 x))]
+    (and (apply = levels) (not (every? zero? levels)))))
 
 (defn silver
   [input]
