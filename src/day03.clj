@@ -4,7 +4,7 @@
 (defn silver
   [input]
   (->> input
-       (re-seq #"[mul(](\d{1,3})[,](\d{1,3})[)]")
+       (re-seq #"mul[(](\d{1,3})[,](\d{1,3})[)]")
        (map rest) ;; remove match
        (map #(* (Integer/parseInt (first %)) (Integer/parseInt (second %))))
        (reduce +)))
